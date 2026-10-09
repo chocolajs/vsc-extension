@@ -12,6 +12,22 @@
           "include": "#interpolation"
         }
       ]
+    },
+    "L: meta.embedded.block.js.chocola": {
+      "patterns": [
+        {
+          "include": "#self-lifecycle-declaration"
+        },
+        {
+          "include": "#self-lifecycle"
+        },
+        {
+          "include": "#self-declaration"
+        },
+        {
+          "include": "#self-var"
+        }
+      ]
     }
   },
   "patterns": [
@@ -84,27 +100,27 @@
       },
       "patterns": [
         {
-          "include": "#runtime-function"
-        },
-        {
-          "include": "#self-declaration"
-        },
-        {
-          "include": "#self-var"
-        },
-        {
-          "include": "source.js"
+          "include": "source.ts"
         }
       ]
     },
-    "runtime-function": {
+    "self-lifecycle-declaration": {
       "name": "meta.function.runtime.chocola",
-      "match": "(function\\s)(\\$runtime)",
+      "match": "(function\\s)(\\$runtime|\\$update|\\$remove)",
       "captures": {
         "1": {
           "name": "keyword.control.js"
         },
         "2": {
+          "name": "entity.other.attribute-name.html"
+        }
+      }
+    },
+    "self-lifecycle": {
+      "name": "meta.function.runtime.chocola",
+      "match": "(?<!\\w)(\\$runtime|\\$update|\\$remove)\\b",
+      "captures": {
+        "1": {
           "name": "entity.other.attribute-name.html"
         }
       }
@@ -185,7 +201,7 @@
           "name": "punctuation.definition.tag.begin.html"
         },
         "2": {
-          "name": "support.type.primitive.ts"
+          "name": "keyword.control.ts"
         },
         "3": {
           "name": "entity.name.tag.html"
@@ -213,7 +229,7 @@
       ]
     },
     "chocola-attributes": {
-      "match": "(?:\\s)(if|del:if|elif|else|bind:\\w+|on:\\w+|style:\\w+|class:\\w+|for:each|as:html|[a-zA-Z0-9-]+\\?|\\$bake)",
+      "match": "(?:\\s)(if|mount:if|elif|else|bind:\\w+|on:\\w+|style:\\w+|class:\\w+|for:each|as:html|[a-zA-Z0-9-]+\\?|\\$bake)",
       "captures": {
         "1": {
           "name": "support.type.primitive.ts"
@@ -284,18 +300,18 @@
       "end": "(\\})",
       "beginCaptures": {
         "1": {
-          "name": "source.js"
+          "name": "source.ts"
         }
       },
       "endCaptures": {
         "1": {
-          "name": "source.js"
+          "name": "source.ts"
         }
       },
-      "contentName": "source.js",
+      "contentName": "source.ts",
       "patterns": [
         {
-          "include": "source.js"
+          "include": "source.ts"
         }
       ]
     },
@@ -389,7 +405,7 @@
         }
       }
     },
-        "style-tag": {
+    "style-tag": {
       "name": "meta.embedded.block.css.chocola",
       "begin": "<(?i)(style)\\b(?=[^>]*/>|(?:[^>]*?(>)))",
       "beginCaptures": {
